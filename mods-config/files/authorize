@@ -208,9 +208,15 @@ DEFAULT	Hint == "SLIP"
 # #
 # DEFAULT
 # 	Service-Type = Administrative-User
-DEFAULT LDAP-Group != "cn=workers,cn=groups,cn=accounts,dc=example,dc=com", Auth-Type := Reject
-#	Reply-Mesasge = "You are not in workers group"
 
+#DEFAULT Login-Time :='A10000-2400'
+
+
+DEFAULT Ldap-Group == "cn=workers,cn=groups,cn=accounts,dc=example,dc=com", Auth-Type := Reject 
+	Reply-Message = "You are in workers group"
+
+DEFAULT Ldap-Group == "cn=students,cn=groups,cn=accounts,dc=example,dc=com", Auth-Type := Reject 
+	Reply-Message = "You are in students group"
 # On no match, the user is denied access.
 
 
