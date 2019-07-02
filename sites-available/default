@@ -420,7 +420,7 @@ authorize {
 	#
 	#  The ldap module reads passwords from the LDAP database.
  	ldap
-        if ((ok || updated) && User-Password) {
+        if ((ok || updated) && User-Password && control:Auth-Type != Reject) {
             update {
                 control:Auth-Type := ldap
             }
