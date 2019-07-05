@@ -178,6 +178,9 @@
 #	by the terminal server in which case there may not be a "P" suffix.
 #	The terminal server sends "Framed-Protocol = PPP" for auto PPP.
 #
+
+bob Cleartext-Password := "mleko123"
+
 DEFAULT	Framed-Protocol == PPP
 	Framed-Protocol = PPP,
 	Framed-Compression = Van-Jacobson-TCP-IP
@@ -212,11 +215,17 @@ DEFAULT	Hint == "SLIP"
 #DEFAULT Login-Time :='A10000-2400'
 
 
-DEFAULT Ldap-Group == "cn=workers,cn=groups,cn=accounts,dc=example,dc=com",   Auth-Type := Accept  #Login-Time :='A10800-2000' #, Auth-Type := Reject 
-	Reply-Message = "You are in workers group"
+DEFAULT Ldap-Group == "cn=workers,cn=groups,cn=accounts,dc=example,dc=com" #,   Auth-Type := Accept  #Login-Time :='A10800-2000' #, Auth-Type := Reject 
+	Reply-Message = "You are in workers group",
+	Tunnel-Type = "VLAN",
+	Tunnel-Medium-Type = "802", 
+	Tunnel-Private-Group-ID = "1"
 
-DEFAULT Ldap-Group == "cn=students,cn=groups,cn=accounts,dc=example,dc=com" ,  Auth-Type := Reject 
-	Reply-Message = "You are in students group"
+DEFAULT Ldap-Group == "cn=students,cn=groups,cn=accounts,dc=example,dc=com" #  ,  Auth-Type := Reject 
+	Reply-Message = "You are in students group",
+	Tunnel-Type = "VLAN",
+	Tunnel-Medium-Type = "802", 
+	Tunnel-Private-Group-ID = "2"
 # On no match, the user is denied access.
 
 

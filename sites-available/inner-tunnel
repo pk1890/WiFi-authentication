@@ -130,6 +130,8 @@ authorize {
 	#
 	eap {
 		ok = return
+#		md5 {
+#		}
 	}
 
 	#
