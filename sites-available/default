@@ -423,9 +423,17 @@ authorize {
 	#  The ldap module reads passwords from the LDAP database.
  	ldap
         if ((ok || updated) && User-Password) {
-            update {
-                control:Auth-Type := pap # ldap
-            }
+        	if ( control:Ns-Account-Lock == "TRUE") {  
+			update {
+                		control:Auth-Type := Reject # ldap
+				reply:Reply-Message += "Your account has been blocked. Contact your administrator"
+			}
+		}
+		else {
+			update {
+                		control:Auth-Type := pap # ldap
+			}
+           	 }
         }
 	#
 	#  Enforce daily limits on time spent logged in.

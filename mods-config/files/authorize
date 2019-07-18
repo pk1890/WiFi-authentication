@@ -212,7 +212,10 @@ DEFAULT	Hint == "SLIP"
 # DEFAULT
 # 	Service-Type = Administrative-User
 
-#DEFAULT Login-Time :='A10000-2400'
+
+#DEFAULT Ns-Account-Lock == "TRUE", Auth-Type := Reject
+#	Reply-Message = "Your account is blocked",
+#	Fall-Through = No
 
 
 DEFAULT Ldap-Group == "cn=workers,cn=groups,cn=accounts,dc=example,dc=com" #,   Auth-Type := Accept  #Login-Time :='A10800-2000' #, Auth-Type := Reject 
