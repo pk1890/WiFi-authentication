@@ -422,8 +422,13 @@ authorize {
 	#
 	#  The ldap module reads passwords from the LDAP database.
  	ldap
+	if(control:Krb-Principal-Expiration) {
+		update {
+			control:Expiration := `/usr/bin/python3 /etc/raddb/translateDate.py %{control:Krb-Principal-Expiration}`
+		}
+	}
         if ((ok || updated) && User-Password) {
-        	if ( control:Ns-Account-Lock == "TRUE") {  
+        	if (control:Ns-Account-Lock && control:Ns-Account-Lock == "TRUE") {  
 			update {
                 		control:Auth-Type := Reject # ldap
 				reply:Reply-Message += "Your account has been blocked. Contact your administrator"

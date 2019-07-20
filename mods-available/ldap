@@ -128,8 +128,10 @@ ldap {
 	#  attribute ref.
 	update {
 #		control:Password-With-Header	+= 'userPassword'
-		control:NT-Password		:= 'WiFiPassword'
-		control:Ns-Account-Lock		:= "nsaccountlock"
+		control:NT-Password			:= 'WiFiPassword'
+		control:Ns-Account-Lock			:= "nsaccountlock"
+		control:Krb-Principal-Expiration	:= "krbprincipalexpiration" 
+#		control:Expiration			:= "krbprincipalexpiration" 
 #		reply:Reply-Message		:= 'radiusReplyMessage'
 #		reply:Tunnel-Type		:= 'radiusTunnelType'
 #		reply:Tunnel-Medium-Type	:= 'radiusTunnelMediumType'
