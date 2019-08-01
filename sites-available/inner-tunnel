@@ -129,8 +129,8 @@ authorize {
 	#  or PEAP.  The load on those servers will therefore be reduced.
 	#
 	eap {
-		ok = return
-#		md5 {
+		#ok = return
+#		peap {
 #		}
 	}
 
@@ -154,12 +154,26 @@ authorize {
 	#
 	#  The ldap module reads passwords from the LDAP database.
 
- 	ldap
-        if ((ok || updated) && User-Password) {
-            update {
-                control:Auth-Type := ldap
-            }
+	ldap
+        if ((ok || updated) && (User-Password || updated) ) {
+                if (control:Ns-Account-Lock && control:Ns-Account-Lock == "TRUE") {
+                        update {
+                                control:Auth-Type := Reject # ldap
+                                reply:Reply-Message += "Your account has been blocked. Contact your administrator"
+                        }
+                }
+                else {
+                        update {
+                                control:Auth-Type := eap # ldap
+                        }
+                 }
         }
+        if(control:Krb-Principal-Expiration) {
+                update {
+                        control:Expiration := `/usr/bin/python3 /etc/raddb/translateDate.py %{control:Krb-Principal-Expiration}`
+                }
+        }
+
 	#
 	#  Enforce daily limits on time spent logged in.
 #	daily
